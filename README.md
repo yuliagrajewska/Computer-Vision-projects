@@ -4,7 +4,8 @@ some projects implementing basic CV stuff including Harris corner detector, Houg
 # Harris Corner Detector
 The **Harris corner detector** is commonly used to detect corners of an image. The idea is to locate points of interest where the surrounding neighborhood shows edges in more than one direction. A corner can be detected by looking at large variations in intensities within a small window when moving around. The change can be estimated using the following equation:
 
-\[ E(u, v) = \sum_{x, y} w(x, y) [I(x + u, y + v) - I(x, y)]^2 \]
+$$ E(u, v) = \sum_{x, y} w(x, y) [I(x + u, y + v) - I(x, y)]^2 $$
+
 
 Where:  
 - \( E \) is the difference between the original and the moved window,  
@@ -17,10 +18,11 @@ The window function can be a rectangular window or a Gaussian window which gives
 
 The above equation can be further approximated using Taylor expansion, giving the final formula as:
 
-\[ E(u, v) \approx \begin{bmatrix} u \\ v \end{bmatrix}^T M \begin{bmatrix} u \\ v \end{bmatrix} \]
+$$ E(u, v) \approx \begin{bmatrix} u \\ v \end{bmatrix}^T M \begin{bmatrix} u \\ v \end{bmatrix} $$
 
 Where:  
-\[ M = \sum_{x, y} w(x, y) \begin{bmatrix} I_x^2 & I_x I_y \\ I_x I_y & I_y^2 \end{bmatrix} \]
+
+$$ M = \sum_{x, y} w(x, y) \begin{bmatrix} I_x^2 & I_x I_y \\ I_x I_y & I_y^2 \end{bmatrix} $$
 
 ---
 
@@ -31,9 +33,9 @@ Where:
 3. **Compute products of derivatives** at every pixel (apply smoothing kernel if required)  
 4. **Compute the sums of the products of derivatives** at each pixel  
 5. Define the matrix \( M \) at each pixel:  
-   \[ M = \begin{bmatrix} S_x^2 & S_{xy} \\ S_{xy} & S_y^2 \end{bmatrix} \]
+   $$ M = \begin{bmatrix} S_x^2 & S_{xy} \\ S_{xy} & S_y^2 \end{bmatrix} $$  
 6. Compute the **response of the detector** at each pixel:  
-   \[ R = \text{det}(M) - k (\text{trace}(M))^2 \]  
+   $$ R = \text{det}(M) - k (\text{trace}(M))^2 $$  
    Where:  
    - \( \text{det}(M) = S_x^2 S_y^2 - S_{xy}^2 \)  
    - \( \text{trace}(M) = S_x + S_y \)  
