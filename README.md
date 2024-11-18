@@ -45,3 +45,40 @@ $$
    - $$\( \text{trace}(M) = S_x + S_y \)  $$
    - \( k \) is the sensitivity factor to separate corners from edges, typically a value close to zero (usually between 0.04 – 0.06).  
 7. **Threshold on value of \( R \)**; compute non-max suppression. All windows with \( R \) greater than a certain value are corners. If \( R \) is a large negative number, it is likely an edge; otherwise, for flat regions, \( R = 0 \).
+
+---
+# Hough Transform Implementation
+
+### 1. **Hough Transform Function**
+- **Inputs:**
+  - `Im`: Edge magnitude image (grayscale).
+  - `rhoRes`: Resolution of the accumulator along the $$\( \rho \)$$ axis.
+  - `thetaRes`: Resolution of the accumulator along the $$\( \theta \)$$ axis.
+- **Outputs:**
+  - `H`: Hough transform accumulator matrix containing votes for possible lines.
+  - `rhoScale`: Array of $$\( \rho \)$$ values.
+  - `thetaScale`: Array of $$\( \theta \)$$ values.
+
+Each edge pixel \( (x, y) \) votes for all possible lines passing through it in the parameter space \( (\rho, \theta) \), where:
+
+$$\[
+\rho = x \cos \theta + y \sin \theta
+\]$$
+
+### 2. **Detecting Lines**
+- Use the accumulator matrix \( H \) to find the top \( nLines \) strongest lines.
+- Apply **non-maximal suppression** to remove neighboring peaks in the accumulator to ensure distinct lines are detected.
+- **Outputs:**
+  - `rhos`: Array of $$\( \rho \)$$ values for detected lines.
+  - `thetas`: Array of $$\( \theta \)$$ values for detected lines.
+
+### 3. **Line Segment Fitting**
+- For visualization, fit detected lines to segments corresponding to actual edges in the image.
+- **Function Output:**
+  - `lines`: Array of structures containing:
+    - `lines[i].start`: Start point \( (x, y) \) of the segment.
+    - `lines[i].stop`: End point \( (x, y) \) of the segment.
+
+### 4. **Visualization**
+- Plot the detected line segments on the original image for validation.
+- Display intermediate results, including the Hough transform accumulator and detected lines.
