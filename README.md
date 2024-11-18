@@ -82,3 +82,73 @@ $$\[
 ### 4. **Visualization**
 - Plot the detected line segments on the original image for validation.
 - Display intermediate results, including the Hough transform accumulator and detected lines.
+- 
+
+---
+# Human Detection Using HOG
+
+This notebook implements a system for human detection in 2D color images using the **Histograms of Oriented Gradients (HOG)** feature and a **Two-Layer Perceptron (neural network)** (implemented from scratch to keep things spicy).
+
+---
+
+## Steps
+
+### 1. **Preprocessing**
+- Convert the input color image to grayscale using the formula:
+
+$$
+I = 0.299R + 0.587G + 0.114B
+$$
+
+- Compute horizontal ($$G_x$$) and vertical ($$G_y$$) gradients using the Prewitt operator.
+- Calculate:
+  - **Edge Magnitude**:
+
+$$
+M(i, j) = \sqrt{G_x^2 + G_y^2}
+$$
+
+  - **Gradient Angle**:
+
+$$
+\theta = \arctan\left(\frac{G_y}{G_x}\right)
+$$
+
+    - Gradient angles are measured with respect to the positive x-axis.
+    - Assign $$M(i, j) = 0$$ and $$\theta = 0$$ where $$G_x = G_y = 0$$.
+
+
+### 2. **HOG Feature Extraction**
+- **Gradient Angle Quantization**:
+  - Divide angles into 9 bins (unsigned representation).
+  - Normalize angles between $$[0, 180)$$.
+- Parameters:
+  - **Cell Size**: $$8 \times 8$$ pixels.
+  - **Block Size**: $$16 \times 16$$ pixels (or $$2 \times 2$$ cells).
+  - **Block Step**: $$8$$ pixels (1 cell overlap).
+- Use **L2 norm** for block normalization. Keep final descriptor values as floating-point numbers.
+
+
+
+### 3. **Neural Network for Classification**
+- Design a **Two-Layer Perceptron**:
+  - **Input Layer**: Size $$N$$ (HOG descriptor size).
+  - **Hidden Layer**: Test sizes of $$250$$, $$500$$, and $$1000$$ neurons.
+  - **Output Layer**: 1 neuron for binary classification (human/no human).
+- Activation Functions:
+  - **Hidden Layer**: ReLU.
+  - **Output Layer**: Sigmoid (to output probabilities).
+- Use the **backpropagation algorithm** to train the network.
+
+
+
+## Implementation Notes
+- No external libraries for HOG computation or neural network training.
+- Use libraries for basic operations like image I/O, matrix arithmetic, and common math functions.
+- Train on 20 images:
+  - **10 Positive**: Containing humans.
+  - **10 Negative**: Without humans.
+- Test on 10 images:
+  - **5 Positive** and **5 Negative**.
+
+
