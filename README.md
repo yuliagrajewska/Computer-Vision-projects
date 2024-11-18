@@ -24,7 +24,6 @@ Where:
 
 $$ M = \sum_{x, y} w(x, y) \begin{bmatrix} I_x^2 & I_x I_y \\ I_x I_y & I_y^2 \end{bmatrix} $$
 
----
 
 ### Corner Detection Process
 
