@@ -32,11 +32,16 @@ $$ M = \sum_{x, y} w(x, y) \begin{bmatrix} I_x^2 & I_x I_y \\ I_x I_y & I_y^2 \e
 3. **Compute products of derivatives** at every pixel (apply smoothing kernel if required)  
 4. **Compute the sums of the products of derivatives** at each pixel  
 5. Define the matrix \( M \) at each pixel:  
-   $$ M = \begin{bmatrix} S_x^2 & S_{xy} \\ S_{xy} & S_y^2 \end{bmatrix} $$  
+$$
+M = \begin{bmatrix} S_x^2 & S_{xy} \\ S_{xy} & S_y^2 \end{bmatrix}
+$$
 6. Compute the **response of the detector** at each pixel:  
-   $$ R = \text{det}(M) - k (\text{trace}(M))^2 $$  
+$$
+R = \text{det}(M) - k (\text{trace}(M))^2
+$$
+
    Where:  
-   - \( \text{det}(M) = S_x^2 S_y^2 - S_{xy}^2 \)  
-   - \( \text{trace}(M) = S_x + S_y \)  
+   - $$\( \text{det}(M) = S_x^2 S_y^2 - S_{xy}^2 \)  $$
+   - $$\( \text{trace}(M) = S_x + S_y \)  $$
    - \( k \) is the sensitivity factor to separate corners from edges, typically a value close to zero (usually between 0.04 – 0.06).  
 7. **Threshold on value of \( R \)**; compute non-max suppression. All windows with \( R \) greater than a certain value are corners. If \( R \) is a large negative number, it is likely an edge; otherwise, for flat regions, \( R = 0 \).
