@@ -151,4 +151,70 @@ $$
 - Test on 10 images:
   - **5 Positive** and **5 Negative**.
 
+---
+# CIFAR-10 Image Classification using CNN
+
+This project implements a Convolutional Neural Network (CNN) to classify images from the CIFAR-10 dataset using PyTorch.
+
+## Project Overview
+
+The CIFAR-10 dataset consists of 60,000 32x32 color images in 10 classes (e.g., airplane, car, bird, etc.). This project includes:
+- Loading and normalizing the dataset.
+- Implementing a custom PyTorch `Dataset` class and `DataLoader` for batch processing.
+- Building a CNN for multi-class classification.
+- Training and testing the model using Cross-Entropy Loss and the Adam optimizer.
+
+## Features
+
+- **Custom Dataset Loader**:
+  - A utility to parse and preprocess CIFAR-10 batches.
+  - Normalizes pixel values to the range [-1, 1].
+- **CNN Architecture**:
+  - Two convolutional layers with ReLU activation and max-pooling.
+  - A fully connected layer for classification.
+- **Training Pipeline**:
+  - Adam optimizer with a learning rate of `0.0005` and weight decay of `0.001`.
+  - Cross-Entropy Loss for classification.
+
+
+## File Structure
+
+- `image_classification.ipynb`: Main notebook containing the implementation.
+- `cifar-10-batches-py/`: Folder containing CIFAR-10 data batches (download required).
+- `README.md`: This file, serving as project documentation.
+
+## Getting Started
+
+### 1. Dataset Preparation
+
+Download the CIFAR-10 dataset from the [CIFAR-10 Website](https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz). Extract the files into a folder named `cifar-10-batches-py/`.
+
+### 2. Running the Code
+
+Open the Jupyter Notebook and run the cells in sequence. Key steps include:
+1. Loading and normalizing the data.
+2. Creating training and testing data loaders.
+3. Defining the CNN model.
+4. Training the model on the CIFAR-10 dataset.
+5. Evaluating the model's accuracy on the test set.
+
+### 3. Output
+
+The notebook will print the following:
+- Device information (CPU or GPU).
+- Model accuracy on the test dataset.
+
+## Model Architecture
+
+| Layer Type    | Parameters                     | Output Shape |
+|---------------|--------------------------------|--------------|
+| Conv2D        | 3 input channels, 6 filters    | 6x28x28      |
+| ReLU          | Activation                     | 6x28x28      |
+| MaxPooling    | Kernel size 2x2                | 6x14x14      |
+| Conv2D        | 6 input channels, 16 filters   | 16x10x10     |
+| ReLU          | Activation                     | 16x10x10     |
+| MaxPooling    | Kernel size 2x2                | 16x5x5       |
+| FullyConnected| 400 input, 10 output neurons   | 10           |
+
+
 
